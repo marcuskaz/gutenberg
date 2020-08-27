@@ -51,6 +51,7 @@ export class BlockMover extends Component {
 			isHidden,
 			rootClientId,
 			orientation,
+			hideDragHandle,
 		} = this.props;
 		const { isFocused } = this.state;
 		if ( isLocked || ( isFirst && isLast && ! rootClientId ) ) {
@@ -93,28 +94,30 @@ export class BlockMover extends Component {
 							) }
 						</ToolbarItem>
 					</ToolbarGroup>
-					<BlockDraggable
-						clientIds={ clientIds }
-						cloneClassname="block-editor-block-mover__drag-clone"
-					>
-						{ ( {
-							isDraggable,
-							onDraggableStart,
-							onDraggableEnd,
-						} ) => (
-							<Button
-								icon={ dragHandle }
-								className="block-editor-block-mover__drag-handle"
-								aria-hidden="true"
-								// Should not be able to tab to drag handle as this
-								// button can only be used with a pointer device.
-								tabIndex="-1"
-								onDragStart={ onDraggableStart }
-								onDragEnd={ onDraggableEnd }
-								draggable={ isDraggable }
-							/>
-						) }
-					</BlockDraggable>
+					{ ! hideDragHandle && (
+						<BlockDraggable
+							clientIds={ clientIds }
+							cloneClassname="block-editor-block-mover__drag-clone"
+						>
+							{ ( {
+								isDraggable,
+								onDraggableStart,
+								onDraggableEnd,
+							} ) => (
+								<Button
+									icon={ dragHandle }
+									className="block-editor-block-mover__drag-handle"
+									aria-hidden="true"
+									// Should not be able to tab to drag handle as this
+									// button can only be used with a pointer device.
+									tabIndex="-1"
+									onDragStart={ onDraggableStart }
+									onDragEnd={ onDraggableEnd }
+									draggable={ isDraggable }
+								/>
+							) }
+						</BlockDraggable>
+					) }
 				</ToolbarGroup>
 			</div>
 		);
